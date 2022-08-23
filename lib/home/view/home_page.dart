@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:onboarding_travel_planner/app/app.dart';
 import 'package:onboarding_travel_planner/home/home.dart';
 
+import '../../map/view/map_view.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -33,6 +35,11 @@ class HomePage extends StatelessWidget {
             Text(user.email ?? '', style: textTheme.headline6),
             const SizedBox(height: 4),
             Text(user.name ?? '', style: textTheme.headline5),
+            TextButton(
+              onPressed: () =>
+                  Navigator.of(context).push<void>(MapView.route()),
+              child: const Text('Go to map'),
+            )
           ],
         ),
       ),
