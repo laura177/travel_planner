@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "469449748154",
+    "project_id": "travelplanner-7f5f0",
+    "storage_bucket": "travelplanner-7f5f0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:469449748154:android:905d7f05c633107bdf1c83",
+        "android_client_info": {
+          "package_name": "com.example.verygoodcore.onboarding_travel_planner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "469449748154-6tgcma65g8qbtqi81gh09lg81c4g3g4u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7U3Fb6MG0IgwVrphlmETjs9HX5UsliBQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "469449748154-6tgcma65g8qbtqi81gh09lg81c4g3g4u.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "469449748154-er3ejsonrq887hh2kdqjmq60bmqso6f7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.travelPlanner"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
