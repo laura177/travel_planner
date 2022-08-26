@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:onboarding_travel_planner/app/app.dart';
 import 'package:onboarding_travel_planner/bootstrap.dart';
 import 'package:onboarding_travel_planner/firebase_options.dart';
+import 'package:onboarding_travel_planner/auth/secrets.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
