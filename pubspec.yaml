@@ -24,6 +24,7 @@ dependencies:
   formz: ^0.4.0
   google_fonts: ^3.0.1
   http: ^0.13.5
+  mapbox_search: ^3.0.1+2
   meta: ^1.7.0
 
 dev_dependencies:

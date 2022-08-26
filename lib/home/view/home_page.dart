@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:onboarding_travel_planner/app/app.dart';
 import 'package:onboarding_travel_planner/home/home.dart';
-
-import '../../map/view/map_view.dart';
+import 'package:onboarding_travel_planner/map_page/map_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
