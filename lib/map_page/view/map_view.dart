@@ -84,7 +84,6 @@ class MapView extends StatelessWidget {
                 selectedIndex = val;
                 currentLocation =
                     mapMarkers[val].location ?? AppConstants.myLocation;
-                _animatedMapMove(currentLocation, 11.5);
               },
               itemCount: mapMarkers.length,
               itemBuilder: (_, idx) {
