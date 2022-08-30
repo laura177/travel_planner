@@ -1,10 +1,10 @@
 import 'package:mapbox_search/mapbox_search.dart';
-import '../../auth/secrets.dart';
+import 'package:onboarding_travel_planner/auth/secrets.dart';
 
-final mapBoxKey = secretMapBoxAccessToken;
+const mapBoxKey = secretMapBoxAccessToken;
 
 Future<void> main() async {
-  String apiKey = mapBoxKey;
+  const apiKey = mapBoxKey;
 
   //await geoCoding(apiKey).catchError(print);
   await placesSearch(apiKey).catchError(print);
@@ -15,10 +15,20 @@ Future placesSearch(String apiKey) async {
     apiKey: apiKey,
     country: 'JP',
     limit: 5,
+    types: PlaceType.poi,
+    language: 'English',
   );
+
   final places = await placesService.getPlaces(
-    'restaurant',
+    'museum',
     location: Location(lat: 35.6762, lng: 139.6503),
   );
-  return places;
+
+  //final placesInfo = ReverseGeoCoding(apiKey: apiKey, location: );
+
+  print(places);
 }
+
+// Future geoCoding(String apiKey) async {
+//   final geoCodingService = ReverseGeoCoding(apiKey: apiKey, types: PlaceType.poi, location: PlaceType., );
+// }

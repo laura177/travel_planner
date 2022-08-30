@@ -36,7 +36,7 @@ class HomePage extends StatelessWidget {
             Text(user.name ?? '', style: textTheme.headline5),
             TextButton(
               onPressed: () =>
-                  Navigator.of(context).push<void>(MapView.route()),
+                  Navigator.of(context).push<void>(MapPage.route()),
               child: const Text('Go to map'),
             )
           ],

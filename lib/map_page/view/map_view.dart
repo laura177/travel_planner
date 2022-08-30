@@ -1,13 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:mapbox_search/mapbox_search.dart';
+// import 'package:onboarding_travel_planner/map_page/view/map_search.dart';
+import 'package:onboarding_travel_planner/auth/secrets.dart';
+import 'package:onboarding_travel_planner/map_page/bloc/map_bloc.dart';
 import 'package:onboarding_travel_planner/map_page/map_page.dart';
+
+class MapPage extends StatelessWidget {
+  const MapPage({super.key});
+
+  static Route<void> route() =>
+      MaterialPageRoute<void>(builder: (_) => const MapPage());
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(create: (_) => MapViewBloc(), child: const MapView());
+  }
+}
 
 class MapView extends StatelessWidget {
   const MapView({super.key});
-
-  static Route<void> route() =>
-      MaterialPageRoute<void>(builder: (_) => const MapView());
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +29,35 @@ class MapView extends StatelessWidget {
     int selectedIndex = 0;
     late LatLng currentLocation;
     currentLocation = AppConstants.myLocation;
+
+    late List<MapBoxPlace>? _newRestaurants;
+
+    final state = context.watch<MapViewBloc>().state;
+    final restaurantsState = state.restaurants;
+    final museumsState = state.museums;
+
+    const mapBoxKey = secretMapBoxAccessToken;
+
+    Future<List<MapBoxPlace>?> placesSearch(String apiKey) async {
+      final placesService = PlacesSearch(
+        apiKey: apiKey,
+        country: 'JP',
+        limit: 5,
+        types: PlaceType.poi,
+        language: 'English',
+      );
+
+      final places = await placesService.getPlaces(
+        'restaurant',
+        location: Location(lat: 35.6762, lng: 139.6503),
+      );
+
+      return places;
+    }
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.pinkAccent,
+        backgroundColor: const Color.fromARGB(255, 216, 158, 173),
         title: const Text('Flutter Map'),
       ),
       body: Stack(
@@ -53,18 +93,20 @@ class MapView extends StatelessWidget {
                               curve: Curves.easeInOut,
                             );
                           },
-                          child: AnimatedScale(
-                            duration: const Duration(milliseconds: 500),
-                            scale: selectedIndex == i ? 1 : 0.7,
-                            child: AnimatedOpacity(
-                              duration: const Duration(milliseconds: 500),
-                              opacity: selectedIndex == i ? 1 : 0.5,
-                              child: const Icon(
-                                Icons.pin_drop_rounded,
-                                color: Colors.red,
-                              ),
-                            ),
-                          ),
+                          child: const Icon(Icons.pin_drop_sharp,
+                              color: Color.fromARGB(255, 219, 19, 5)),
+                          // child: AnimatedScale(
+                          //   duration: const Duration(milliseconds: 500),
+                          //   scale: selectedIndex == i ? 1 : 0.7,
+                          //   child: AnimatedOpacity(
+                          //     duration: const Duration(milliseconds: 500),
+                          //     opacity: selectedIndex == i ? 1 : 0.5,
+                          //     child: const Icon(
+                          //       Icons.pin_drop_rounded,
+                          //       color: Colors.red,
+                          //     ),
+                          //   ),
+                          // ),
                         );
                       },
                       point: mapMarkers[i].location ?? AppConstants.myLocation,
@@ -72,6 +114,19 @@ class MapView extends StatelessWidget {
                 ],
               )
             ],
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              _newRestaurants =
+                  await placesSearch(AppConstants.mapBoxAccessToken);
+              context
+                  .read<MapViewBloc>()
+                  .add(RestaurantsSearched(restaurants: _newRestaurants!));
+
+              //this returns and array of places, how do we map them
+              print(restaurantsState);
+            },
+            child: const Text('Search'),
           ),
           Positioned(
             left: 0,
