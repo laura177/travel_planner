@@ -58,7 +58,7 @@ class MapView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 216, 158, 173),
-        title: const Text('Flutter Map'),
+        title: const Text('Plan a Day Out'),
       ),
       body: Stack(
         children: [
@@ -95,18 +95,6 @@ class MapView extends StatelessWidget {
                           },
                           child: const Icon(Icons.pin_drop_sharp,
                               color: Color.fromARGB(255, 219, 19, 5)),
-                          // child: AnimatedScale(
-                          //   duration: const Duration(milliseconds: 500),
-                          //   scale: selectedIndex == i ? 1 : 0.7,
-                          //   child: AnimatedOpacity(
-                          //     duration: const Duration(milliseconds: 500),
-                          //     opacity: selectedIndex == i ? 1 : 0.5,
-                          //     child: const Icon(
-                          //       Icons.pin_drop_rounded,
-                          //       color: Colors.red,
-                          //     ),
-                          //   ),
-                          // ),
                         );
                       },
                       point: mapMarkers[i].location ?? AppConstants.myLocation,
@@ -115,18 +103,33 @@ class MapView extends StatelessWidget {
               )
             ],
           ),
-          ElevatedButton(
-            onPressed: () async {
-              _newRestaurants =
-                  await placesSearch(AppConstants.mapBoxAccessToken);
-              context
-                  .read<MapViewBloc>()
-                  .add(RestaurantsSearched(restaurants: _newRestaurants!));
+          Column(
+            children: [
+              const SizedBox(height: 5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  FloatingActionButton.extended(
+                    label: const Text('Restaurants'),
+                    backgroundColor: const Color.fromARGB(255, 120, 153, 211),
+                    onPressed: () async {
+                      _newRestaurants =
+                          await placesSearch(AppConstants.mapBoxAccessToken);
+                      context.read<MapViewBloc>().add(
+                          RestaurantsSearched(restaurants: _newRestaurants!));
 
-              //this returns and array of places, how do we map them
-              print(restaurantsState);
-            },
-            child: const Text('Search'),
+                      //this returns and array of places, how do we map them
+                      print(restaurantsState);
+                    },
+                  ),
+                  FloatingActionButton.extended(
+                    label: const Text('Museums'),
+                    onPressed: () {},
+                    backgroundColor: const Color.fromARGB(255, 120, 153, 211),
+                  ),
+                ],
+              ),
+            ],
           ),
           Positioned(
             left: 0,
@@ -150,44 +153,37 @@ class MapView extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    color: const Color.fromARGB(255, 237, 189, 230),
+                    color: const Color.fromARGB(255, 195, 136, 158),
                     child: Row(
                       children: [
                         const SizedBox(width: 10),
                         Expanded(
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Expanded(
-                                child: ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, index) {
-                                    return const Icon(
-                                      Icons.star,
-                                      color: Colors.orange,
-                                    );
-                                  },
-                                ),
+                              IconButton(
+                                icon: const Icon(Icons.add_box),
+                                onPressed: () {},
                               ),
+                              const SizedBox(height: 10),
                               Expanded(
                                 child: Column(
                                   children: [
                                     Text(
                                       item.title ?? '',
                                       style: const TextStyle(
-                                        fontSize: 20,
+                                        fontSize: 15,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     const SizedBox(
-                                      height: 10,
+                                      height: 5,
                                     ),
                                     Text(
                                       item.address ?? '',
                                       style: const TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey,
+                                        fontSize: 12,
+                                        color: Color.fromARGB(255, 35, 33, 33),
                                       ),
                                     ),
                                   ],
